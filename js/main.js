@@ -60,11 +60,14 @@ let container = document.getElementById("container");
 
 posts.forEach ((element) => {
 
-    let authorImage;
-    if (element.author.image) {
-        authorImage = element.author.image;
+    let authorImage = "";
+    if (element.author.image != null) {
+        authorImage = `<img class="profile-pic" src="${element.author.image}" alt="${element.author.name}">`
     } else {
-        authorImage = "";
+        authorImage = `
+        <div class="profile-pic-default">
+        <span>LF</span>
+        </div>`;
     }
     
     let postHTML = `
@@ -72,7 +75,7 @@ posts.forEach ((element) => {
         <div class="post__header">
             <div class="post-meta">
                 <div class="post-meta__icon">
-                    <img class="profile-pic" src="${authorImage}" alt="${authorImage}">
+                    ${authorImage}
                 </div>
                 <div class="post-meta__data">
                     <div class="post-meta__author">${element.author.name}</div>
@@ -101,4 +104,29 @@ posts.forEach ((element) => {
     container.innerHTML += postHTML;
 });
 
-const btnLikes = document.querySelectorAll(".js-like-button");
+const likesContainer = document.getElementsByClassName("js-likes");
+
+for (let i = 0; i < likesContainer.length; i++) {
+    const currentContainer = likesContainer[i];
+    const btn = currentContainer.querySelector(".like-button");
+    const likes = currentContainer.querySelector(".js-likes-counter");
+    const clickedClass = "like-button--liked";
+    
+    btn.addEventListener("click", function(e) {
+        e.preventDefault();
+
+        if (!btn.classList.contains(clickedClass)) {
+            btn.classList.add(clickedClass);
+            let likeNumber = parseInt(likes.innerText);
+            likeNumber++;
+            likes.innerText = likeNumber;
+        } else {
+            btn.classList.remove(clickedClass);
+            let likeNumber = parseInt(likes.innerText);
+            likeNumber--;
+            likes.innerText = likeNumber;
+        }
+
+        currentBtn.classList.add("like-button--liked");
+    })
+}
