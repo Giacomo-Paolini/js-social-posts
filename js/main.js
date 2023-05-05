@@ -106,6 +106,7 @@ posts.forEach ((element) => {
 
 const likesContainer = document.getElementsByClassName("js-likes");
 
+// ****** INSERITO DOPO LEZIONE ******
 for (let i = 0; i < likesContainer.length; i++) {
     const currentContainer = likesContainer[i];
     const btn = currentContainer.querySelector(".like-button");
